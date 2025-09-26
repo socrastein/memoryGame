@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import HOTSIcon from '@/assets/photos/HOTS Icon.png'
-const props = defineProps({ name: String, imgURL: String })
 
-let revealed = ref(false)
+const props = defineProps({ token: Object })
 
 function toggleReveal() {
-  revealed.value = !revealed.value
-  console.log(`Revealing ${props.name}`)
+  if (!props.token) return
+  props.token.revealed = !props.token.revealed
+  console.log(`Revealing ${props.token.name}`)
 }
 </script>
 
 <template>
   <div class="tileContainer">
-    <img :src="revealed ? imgURL : HOTSIcon" @click="toggleReveal" />
+    <img :src="token.revealed ? token.img : token.coverIMG" @click="toggleReveal" />
   </div>
 </template>
 
