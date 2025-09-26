@@ -1,36 +1,37 @@
 import { reactive } from 'vue'
 
-import HOTSIcon from '@/assets/photos/HOTS Icon.png'
+import { Token } from './classToken'
 
-import jainaIMG from '@/assets/portraits/Jaina.png'
-import garroshIMG from '@/assets/portraits/Garrosh.png'
+// Images for all of the tokens
+import jaina from '@/assets/portraits/Jaina.png'
+import garrosh from '@/assets/portraits/Garrosh.png'
+import chen from '@/assets/portraits/Chen.png'
+import lili from '@/assets/portraits/LiLi.png'
+import artanis from '@/assets/portraits/Artanis.png'
 
-class Token {
-  name: string
-  img: string
+function getTokenArray(amount?: number) {
+  const tokenArray = [
+    new Token('Jaina', jaina),
+    new Token('Garrosh', garrosh),
+    new Token('Chen', chen),
+    new Token('Li Li', lili),
+    new Token('Artanis', artanis),
+  ]
 
-  revealed = false
-  coverIMG = HOTSIcon
-
-  constructor(name: string, img: string) {
-    this.name = name
-    this.img = img
+  if (amount) {
+    return tokenArray.slice(0, amount)
+  } else {
+    return tokenArray
   }
 }
 
-const tokenArray = [new Token('Jaina', jainaIMG), new Token('Garrosh', garroshIMG)]
-
 export function getTokens(amount?: number) {
-  let tokens: Token[]
-  if (amount) {
-    tokens = tokenArray.slice(0, amount)
-  } else {
-    tokens = tokenArray.slice()
-  }
+  const tokens = getTokenArray(amount)
+  const copies = getTokenArray(amount)
+  const combined = tokens.concat(copies)
 
-  shuffle(tokens)
-  
-  return reactive(tokens)
+  shuffle(combined)
+  return reactive(combined)
 }
 
 function shuffle(array: any[]) {
