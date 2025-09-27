@@ -38,7 +38,7 @@ export const state = reactive<State>({
   startNewGame() {
     setNewPlayers()
     resetFlipped()
-    this.gameTokens = getTokens()
+    this.gameTokens = getTokens(27)
   },
 
   nextPlayerTurn() {

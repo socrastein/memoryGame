@@ -3,35 +3,53 @@ import { reactive } from 'vue'
 import { Token } from './classToken'
 
 // Images for all of the tokens
-import jaina from '@/assets/portraits/Jaina.png'
-import garrosh from '@/assets/portraits/Garrosh.png'
-import chen from '@/assets/portraits/Chen.png'
-import lili from '@/assets/portraits/LiLi.png'
-import artanis from '@/assets/portraits/Artanis.png'
+// import jaina from '@/assets/portraits/Jaina.png'
+// import garrosh from '@/assets/portraits/Garrosh.png'
+// import chen from '@/assets/portraits/Chen.png'
+// import lili from '@/assets/portraits/LiLi.png'
+// import artanis from '@/assets/portraits/Artanis.png'
 
-function getTokenArray(amount?: number) {
-  const tokenArray = [
-    new Token('Jaina', jaina),
-    new Token('Garrosh', garrosh),
-    new Token('Chen', chen),
-    new Token('Li Li', lili),
-    new Token('Artanis', artanis),
-  ]
+// const tokenArray = [
+//   new Token('Jaina', jaina),
+//   new Token('Garrosh', garrosh),
+//   new Token('Chen', chen),
+//   new Token('Li Li', lili),
+//   new Token('Artanis', artanis),
+// ]
 
-  if (amount) {
-    return tokenArray.slice(0, amount)
-  } else {
-    return tokenArray
+const images = import.meta.glob('@/assets/portraits/*.png', { eager: true })
+
+function getTokenArray(): Token[] {
+  const tokens: Token[] = []
+
+  for (const path in images) {
+    // @ts-ignore
+    const url = images[path].default || images[path]
+
+    // Extract name from filename
+    const parts = path.split('/')
+    const filename = parts[parts.length - 1]
+    const name = filename.split('.')[0]
+
+    tokens.push(new Token(name, url))
   }
+
+  return tokens
 }
 
 export function getTokens(amount?: number) {
-  const tokens = getTokenArray(amount)
-  const copies = getTokenArray(amount)
-  const combined = tokens.concat(copies)
+  let tokens = getTokenArray()
+  let copies = getTokenArray()
 
+  if (amount) {
+    tokens = getTokenArray().slice(0, amount)
+    copies = getTokenArray().slice(0, amount)
+  }
+
+  const combined = tokens.concat(copies)
   shuffle(combined)
-  return reactive(combined)
+
+  return combined
 }
 
 function shuffle(array: any[]) {
