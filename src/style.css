@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 300;
+  font-style: normal;
+  src: url('./assets/fonts/ubuntu/ubuntu-v20-latin-300.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 700;
+  font-style: normal;
+  src: url('./assets/fonts/ubuntu/ubuntu-v20-latin-700.woff2') format('woff2');
+}
+
+body {
+  font-family: 'Ubuntu', sans-serif, Arial;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
