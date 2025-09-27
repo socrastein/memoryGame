@@ -14,16 +14,15 @@ function handleClick() {
     <div v-if="token.matched" class="tilePlaceholder"></div>
     <img v-else :src="token.revealed ? token.img : token.coverIMG" @click="handleClick" />
   </div>
-  <p v-if="token">{{ token.name }}</p>
 </template>
 
 <style scoped>
 .tileContainer {
   display: flex;
-  overflow: hidden;
+  overflow: auto;
 
-  height: 4rem;
-  width: 4rem;
+  height: 6rem;
+  aspect-ratio: 1;
 
   border: solid 5px black;
   border-radius: 50%;
