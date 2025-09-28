@@ -84,11 +84,6 @@ function setNewPlayers(name1 = 'Player 1', name2 = 'Player 2') {
   const player1 = new Player(name1)
   const player2 = new Player(name2)
 
-  //TOKENS FOR TESTING
-  player1.tokens = [...state.gameTokens.slice(0, 10)]
-  player2.tokens = [...state.gameTokens.slice(10)]
-  state.winningPlayer = player2
-
   state.players = [player1, player2]
   state.currentPlayerIndex = 0
 }
