@@ -44,7 +44,7 @@ export const state = reactive<State>({
   firstFlipped: undefined,
   secondFlipped: undefined,
 
-  startNewGame(numberOfTokens = 3) {
+  startNewGame(numberOfTokens = 27) {
     this.gameTokens = []
     this.gameTokens = getTokens(numberOfTokens)
     resetVariables()
