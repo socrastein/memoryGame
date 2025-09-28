@@ -3,7 +3,7 @@ import { Token } from './classToken'
 const images = import.meta.glob('@/assets/portraits/*.png', { eager: true })
 
 function getTokenArray(): Token[] {
-  const tokens: Token[] = []
+  let tokens: Token[] = []
 
   for (const path in images) {
     // @ts-ignore
@@ -20,16 +20,20 @@ function getTokenArray(): Token[] {
   return tokens
 }
 
+const tokenArray = getTokenArray()
+
 export function getTokens(amount?: number) {
-  let tokens = getTokenArray()
-  let copies = getTokenArray()
+  shuffle(tokenArray)
+
+  let tokens = structuredClone(tokenArray)
+  let copies = structuredClone(tokenArray)
 
   if (amount) {
-    tokens = getTokenArray().slice(0, amount)
-    copies = getTokenArray().slice(0, amount)
+    tokens = tokens.slice(0, amount)
+    copies = copies.slice(0, amount)
   }
 
-  const combined = tokens.concat(copies)
+  let combined = tokens.concat(copies)
   shuffle(combined)
 
   return combined

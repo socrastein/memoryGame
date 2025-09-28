@@ -26,7 +26,7 @@ interface State {
 
 export const state = reactive<State>({
   showMenu: true,
-  showGameEnd: true,
+  showGameEnd: false,
   currentlyEvaluating: false,
 
   players: [],
@@ -44,7 +44,8 @@ export const state = reactive<State>({
   firstFlipped: undefined,
   secondFlipped: undefined,
 
-  startNewGame(numberOfTokens = 27) {
+  startNewGame(numberOfTokens = 3) {
+    this.gameTokens = []
     this.gameTokens = getTokens(numberOfTokens)
     resetVariables()
     setNewPlayers()
@@ -73,6 +74,7 @@ export const state = reactive<State>({
     // Second token matches the first
     if (this.firstFlipped.name === this.secondFlipped.name) {
       handleMatch()
+      return
     }
 
     // Second token does not match the first
@@ -95,8 +97,7 @@ function nextPlayerTurn() {
   } else {
     state.currentPlayerIndex++
   }
-  console.log(`${state.players[state.currentPlayerIndex].name}'s turn`)
-  resetVariables()
+  resetFlippedTokens()
   flipAllTokens()
 }
 
@@ -104,36 +105,47 @@ function handleMatch() {
   if (!(state.firstFlipped && state.secondFlipped)) return
 
   state.matchedThisTurn.push(state.firstFlipped, state.secondFlipped)
+
   if (hasGameBeenWon()) {
+    addMatchesToPlayerScore()
     endGame()
     return
   }
-  resetVariables()
+  resetFlippedTokens()
   return
 }
 
 function handleMiss() {
   state.currentlyEvaluating = true
   setTimeout(() => {
-    const player = state.getCurrentPlayer()
-    const tokensTaken: String[] = []
-
-    state.matchedThisTurn.forEach((token) => {
-      token.matched = true
-      if (tokensTaken.includes(token.name)) {
-        return
-      }
-      tokensTaken.push(token.name)
-      player.takeTokens(token.name)
-    })
+    addMatchesToPlayerScore()
     nextPlayerTurn()
     state.currentlyEvaluating = false
   }, 1500)
 }
 
-function resetVariables() {
+function addMatchesToPlayerScore() {
+  const player = state.getCurrentPlayer()
+  const tokensTaken: String[] = []
+
+  state.matchedThisTurn.forEach((token) => {
+    token.matched = true
+    if (tokensTaken.includes(token.name)) {
+      return
+    }
+    tokensTaken.push(token.name)
+    player.takeTokens(token.name)
+  })
+  state.matchedThisTurn = []
+}
+
+function resetFlippedTokens() {
   state.firstFlipped = undefined
   state.secondFlipped = undefined
+}
+
+function resetVariables() {
+  resetFlippedTokens()
   state.showMenu = false
   state.showGameEnd = false
   state.winningPlayer = undefined
@@ -147,13 +159,15 @@ function flipAllTokens() {
 }
 
 function hasGameBeenWon(): boolean {
+  let gameWon = true
   state.gameTokens.forEach((token) => {
-    if ((token.matched = false)) {
-      return false
+    if (token.matched === false && !state.matchedThisTurn.includes(token)) {
+      gameWon = false
     }
     // All tokens have been matched
   })
-  return true
+  console.log(`Checking if game is won: ${gameWon}`)
+  return gameWon
 }
 
 function endGame() {
