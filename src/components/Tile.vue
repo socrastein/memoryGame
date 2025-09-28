@@ -26,11 +26,15 @@ function handleClick() {
 
   border: solid 5px black;
   border-radius: 50%;
+
+  cursor: pointer;
 }
 
 .tilePlaceholder {
   pointer-events: none;
   background-color: transparent;
+
+  cursor: default;
 }
 
 img {
