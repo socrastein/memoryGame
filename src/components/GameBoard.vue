@@ -28,6 +28,8 @@ const players = state.players
     </div>
     <div v-else class="endScreen">
       <PlayerEndScore v-for="player in players" :player="player" />
+      
+      <button @click="state.startNewGame()">New Game</button>
     </div>
   </div>
 </template>
