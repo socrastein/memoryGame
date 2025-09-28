@@ -3,9 +3,11 @@ import { ref, computed } from 'vue'
 import { state } from '@/scripts/gameState'
 
 import Tile from './Tile.vue'
+import PlayerEndScore from './PlayerEndScore.vue'
 
 const gameTokens = ref(state.gameTokens)
 const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
+const players = state.players
 </script>
 
 <template>
@@ -21,8 +23,11 @@ const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
         <h1>{{ player.tokens.length }}</h1>
       </div>
     </div>
-    <div class="tokensContainer">
+    <div v-if="!state.showGameEnd" class="tokensContainer">
       <Tile v-for="token in gameTokens" :token="token" />
+    </div>
+    <div v-else class="endScreen">
+      <PlayerEndScore v-for="player in players" :player="player" />
     </div>
   </div>
 </template>
@@ -32,12 +37,12 @@ const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   gap: 1rem;
   padding: 1rem;
 
-  height: 100vh;
+  min-height: 100vh;
   width: 100dvw;
 
   background-color: #1a1a1a;
@@ -84,5 +89,17 @@ const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
 
   border: solid 1px whitesmoke;
   border-radius: 2rem;
+}
+
+.endScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  gap: 1rem;
+
+  height: 100%;
+  width: 100%;
 }
 </style>
