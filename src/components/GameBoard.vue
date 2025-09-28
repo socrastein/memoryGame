@@ -5,9 +5,9 @@ import { state } from '@/scripts/gameState'
 import Tile from './Tile.vue'
 import PlayerEndScore from './PlayerEndScore.vue'
 
-const gameTokens = ref(state.gameTokens)
+const gameTokens = computed(() => state.gameTokens)
 const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
-const players = state.players
+const players = computed(() => state.players)
 </script>
 
 <template>
