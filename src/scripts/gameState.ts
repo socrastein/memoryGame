@@ -9,10 +9,13 @@ interface State {
   showGameEnd: boolean
   currentlyEvaluating: boolean
 
+  numPlayers: number
   players: Player[]
   currentPlayerIndex: number
   getCurrentPlayer: Function
   winningPlayer: Player | undefined
+
+  numberOfTurns: number
 
   gameTokens: Token[]
   matchedThisTurn: Token[]
@@ -20,8 +23,10 @@ interface State {
   firstFlipped: Token | undefined
   secondFlipped: Token | undefined
 
-  startNewGame: Function
   evaluateFlip: Function
+
+  startNewGame: Function
+  resetGame: Function
 }
 
 export const state = reactive<State>({
@@ -29,6 +34,7 @@ export const state = reactive<State>({
   showGameEnd: false,
   currentlyEvaluating: false,
 
+  numPlayers: 1,
   players: [],
   currentPlayerIndex: 0,
 
@@ -38,18 +44,13 @@ export const state = reactive<State>({
 
   winningPlayer: undefined,
 
+  numberOfTurns: 0,
+
   gameTokens: [],
   matchedThisTurn: [],
 
   firstFlipped: undefined,
   secondFlipped: undefined,
-
-  startNewGame(numberOfTokens = 27) {
-    this.gameTokens = []
-    this.gameTokens = getTokens(numberOfTokens)
-    resetVariables()
-    setNewPlayers()
-  },
 
   evaluateFlip(token: Token) {
     // Don't allow more clicking between timeouts
@@ -80,13 +81,37 @@ export const state = reactive<State>({
     // Second token does not match the first
     handleMiss()
   },
+
+  startNewGame(numberOfTokens = 27, playerNames: string[] = []) {
+    this.showMenu = false
+    this.gameTokens = []
+    this.gameTokens = getTokens(numberOfTokens)
+    setNewPlayers(playerNames)
+  },
+
+  resetGame() {
+    this.winningPlayer = undefined
+    this.players.forEach((player) => player.resetTokens())
+    this.currentPlayerIndex = 0
+    this.numberOfTurns = 0
+    this.matchedThisTurn = []
+
+    resetFlippedTokens()
+    const tokensLength = this.gameTokens.length
+    this.gameTokens = []
+    this.gameTokens = getTokens(tokensLength)
+
+    this.showGameEnd = false
+  },
 })
 
-function setNewPlayers(name1 = 'Player 1', name2 = 'Player 2') {
-  const player1 = new Player(name1)
-  const player2 = new Player(name2)
-
-  state.players = [player1, player2]
+function setNewPlayers(playerNames: string[]) {
+  state.players = []
+  for (let i = 0; i < state.numPlayers; i++) {
+    const name = playerNames[i] ? playerNames[i] : `Player ${i + 1}`
+    const player = new Player(name)
+    state.players.push(player)
+  }
   state.currentPlayerIndex = 0
 }
 
@@ -99,6 +124,7 @@ function nextPlayerTurn() {
   }
   resetFlippedTokens()
   flipAllTokens()
+  state.numberOfTurns++
 }
 
 function handleMatch() {
@@ -142,13 +168,6 @@ function addMatchesToPlayerScore() {
 function resetFlippedTokens() {
   state.firstFlipped = undefined
   state.secondFlipped = undefined
-}
-
-function resetVariables() {
-  resetFlippedTokens()
-  state.showMenu = false
-  state.showGameEnd = false
-  state.winningPlayer = undefined
 }
 
 function flipAllTokens() {

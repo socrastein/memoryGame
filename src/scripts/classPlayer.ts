@@ -1,7 +1,7 @@
 import { state } from './gameState'
 
 interface Token {
-  img: string | undefined;
+  img: string | undefined
   name: string
 }
 
@@ -15,12 +15,15 @@ export class Player {
   }
 
   takeTokens(tokenName: string) {
-
     const tokenIndex = state.gameTokens.findIndex((token: Token) => {
       return token.name === tokenName
     })
 
     const token = state.gameTokens[tokenIndex]
     this.tokens.push(token)
+  }
+
+  resetTokens() {
+    this.tokens = []
   }
 }

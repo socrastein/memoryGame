@@ -8,6 +8,7 @@ import PlayerEndScore from './PlayerEndScore.vue'
 const gameTokens = computed(() => state.gameTokens)
 const currentPlayer = computed(() => state.players[state.currentPlayerIndex])
 const players = computed(() => state.players)
+const turns = computed(() => state.numberOfTurns)
 </script>
 
 <template>
@@ -27,9 +28,12 @@ const players = computed(() => state.players)
       <Tile v-for="token in gameTokens" :token="token" />
     </div>
     <div v-else class="endScreen">
+      <h1>Game Over!</h1>
+      <h2>Turns: {{ turns }}</h2>
       <PlayerEndScore v-for="player in players" :player="player" />
 
-      <button class="newGameButton" @click="state.startNewGame()">New Game</button>
+      <button class="newGameButton" @click="state.showMenu = true">Main Menu</button>
+      <button class="newGameButton" @click="state.resetGame()">Play Again</button>
     </div>
   </div>
 </template>
@@ -53,8 +57,9 @@ const players = computed(() => state.players)
 .gameHeader {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  gap: 1rem;
 
+  width: 100%;
   padding: 0 5%;
 }
 

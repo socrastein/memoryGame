@@ -13,7 +13,7 @@ const winningPlayer = ref(props.player === state.winningPlayer)
 <template>
   <div v-if="player" class="playerScoreContainer">
     <h1 v-if="winningPlayer" class="winner">{{ player.name.toUpperCase() }} WINS!</h1>
-    <h1 v-else class="loser">{{ player.name }} sucks...</h1>
+    <h1 v-else class="loser">{{ player.name }}</h1>
     <img class="smallToken" v-for="token in player.tokens" :src="token.img" />
   </div>
 </template>
