@@ -66,10 +66,9 @@ const turns = computed(() => state.numberOfTurns)
   justify-content: flex-start;
 
   gap: 1rem;
-  padding: 1rem;
 
-  min-height: 100vh;
-  width: 100dvw;
+  min-height: 100%;
+  width: 100%;
 
   background-color: #1a1a1a;
 }
@@ -80,7 +79,6 @@ const turns = computed(() => state.numberOfTurns)
   gap: 1rem;
 
   width: 100%;
-  padding: 0 5%;
 }
 
 .playerContainer {

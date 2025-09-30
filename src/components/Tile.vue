@@ -12,19 +12,25 @@ function handleClick() {
 <template>
   <div v-if="token" class="tileContainer">
     <div v-if="token.matched" class="tilePlaceholder"></div>
-    <img v-else :src="token.revealed ? token.img : token.coverIMG" @click="handleClick" />
+    <img
+      v-else
+      :src="token.revealed ? token.img : token.coverIMG"
+      :class="{ revealed: token.revealed }"
+      @click="handleClick"
+    />
   </div>
 </template>
 
 <style scoped>
 .tileContainer {
   display: flex;
-  overflow: auto;
+  align-items: center;
+  overflow: hidden;
 
   height: 6rem;
+  width: 6rem;
   aspect-ratio: 1;
 
-  border: solid 5px black;
   border-radius: 50%;
 
   cursor: pointer;
@@ -38,6 +44,12 @@ function handleClick() {
 }
 
 img {
+  object-fit: cover;
+  width: 120%;
+  height: 120%;
+}
+
+img.revealed {
   object-fit: cover;
   width: 100%;
   height: 100%;
