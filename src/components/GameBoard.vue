@@ -32,8 +32,28 @@ const turns = computed(() => state.numberOfTurns)
       <h2>Turns: {{ turns }}</h2>
       <PlayerEndScore v-for="player in players" :player="player" />
 
-      <button class="newGameButton" @click="state.showMenu = true">Main Menu</button>
-      <button class="newGameButton" @click="state.resetGame()">Play Again</button>
+      <button
+        class="newGameButton"
+        @click="
+          () => {
+            state.resetGame()
+            state.showMenu = true
+          }
+        "
+      >
+        Main Menu
+      </button>
+      <button
+        class="newGameButton"
+        @click="
+          () => {
+            state.resetGame()
+            state.replayGame()
+          }
+        "
+      >
+        Play Again
+      </button>
     </div>
   </div>
 </template>

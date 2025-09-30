@@ -36,6 +36,10 @@ export function getTokens(amount?: number) {
   let combined = tokens.concat(copies)
   shuffle(combined)
 
+  combined.forEach((token) => {
+    token.matched = false
+  })
+
   return combined
 }
 

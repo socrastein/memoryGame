@@ -27,6 +27,7 @@ interface State {
 
   startNewGame: Function
   resetGame: Function
+  replayGame: Function
 }
 
 export const state = reactive<State>({
@@ -91,17 +92,19 @@ export const state = reactive<State>({
 
   resetGame() {
     this.winningPlayer = undefined
-    this.players.forEach((player) => player.resetTokens())
     this.currentPlayerIndex = 0
     this.numberOfTurns = 0
     this.matchedThisTurn = []
 
     resetFlippedTokens()
+    this.showGameEnd = false
+  },
+
+  replayGame() {
+    this.players.forEach((player) => player.resetTokens())
     const tokensLength = this.gameTokens.length
     this.gameTokens = []
-    this.gameTokens = getTokens(tokensLength)
-
-    this.showGameEnd = false
+    this.gameTokens = getTokens(tokensLength / 2)
   },
 })
 
