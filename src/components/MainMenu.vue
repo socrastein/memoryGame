@@ -30,16 +30,16 @@ function startGame() {
   <div class="menuContainer">
     <h1>Heroes of the Storm</h1>
     <div class="tokensContainer">
-      <img class="token" :src="HOTS"></img>
+      <img class="token" :src="HOTS">
 
-      <img class="token" :src="murky"></img>
-      <img class="token" :src="HOTS"></img>
-      <img class="token" :src="mei"></img>
-      <img class="token" :src="HOTS"></img>
+      <img class="token" :src="murky">
+      <img class="token" :src="HOTS">
+      <img class="token" :src="mei">
+      <img class="token" :src="HOTS">
 
     </div>
     <h2>Memory Matching Game</h2>
-    <hr></hr>
+    <hr />
     <h3>Number of players:</h3>
 
     <div class="radioContainer">
@@ -82,7 +82,7 @@ function startGame() {
       </div>
     </div>
 
-    <hr></hr>
+    <hr />
 
     <h3>Pairs of Tokens:</h3>
     <select v-model="numberOfTokens">
@@ -91,7 +91,7 @@ function startGame() {
       <option value="27">27 (Hard)</option>
     </select>
 
-    <hr></hr>
+    <hr />
 
     <MenuButton text="Start Game" @click="() => startGame()" />
   </div>
