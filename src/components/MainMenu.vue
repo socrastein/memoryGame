@@ -3,9 +3,9 @@ import MenuButton from './MenuButton.vue'
 import { state } from '@/scripts/gameState'
 import { ref } from 'vue'
 
-import HOTS from "@/assets/photos/HOTS Icon.png"
-import murky from "@/assets/portraits/Murky.png"
-import mei from "@/assets/portraits/Mei.png"
+import HOTS from '@/assets/photos/HOTS Icon.png'
+import murky from '@/assets/portraits/Murky.png'
+import mei from '@/assets/portraits/Mei.png'
 
 const showMenu = ref(state.showMenu)
 
@@ -30,13 +30,12 @@ function startGame() {
   <div class="menuContainer">
     <h1>Heroes of the Storm</h1>
     <div class="tokensContainer">
-      <img class="token" :src="HOTS">
+      <img class="token" :src="HOTS" />
 
-      <img class="token" :src="murky">
-      <img class="token" :src="HOTS">
-      <img class="token" :src="mei">
-      <img class="token" :src="HOTS">
-
+      <img class="token" :src="murky" />
+      <img class="token" :src="HOTS" />
+      <img class="token" :src="mei" />
+      <img class="token" :src="HOTS" />
     </div>
     <h2>Memory Matching Game</h2>
     <hr />
@@ -117,7 +116,10 @@ function startGame() {
     0px 8px 8px 2px cyan;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
 }
 
@@ -151,7 +153,6 @@ h3 {
 }
 
 h4 {
-  
 }
 
 .nameInputsContainer {
@@ -164,24 +165,24 @@ h4 {
 .nameContainer {
   display: flex;
   flex-direction: column;
-  gap: .25rem;
+  gap: 0.25rem;
 }
 
-input[type="text"] {
+input[type='text'] {
   width: 12rem;
-  padding: .25rem;
+  padding: 0.25rem;
   font-size: 1rem;
   text-align: center;
 
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
-select { 
+select {
   width: 12rem;
-  padding: .25rem;
+  padding: 0.25rem;
   font-size: 1rem;
   text-align: center;
 
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 </style>
